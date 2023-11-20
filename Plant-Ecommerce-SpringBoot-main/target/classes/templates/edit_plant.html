@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fregments :: head"></head>
+<body class="bg-success bg-gradient" style="--bs-bg-opacity: .25">
+
+<div th:replace="fregments :: navbar"></div>
+
+<div th:if="${error}" th:replace="fregments :: alert-error"></div>
+<div th:if="${success}" th:replace="fregments :: alert-success"></div>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-7 mx-auto">
+      <form th:action="@{/plant/edit/save}" th:object="${plantEdit}" method="post">
+          <input type="text" class="form-control" hidden="hidden" id="id" th:field="*{id}" name="id" required>
+          <div class="form-group mb-4">
+            <label for="plantName">Name</label>
+            <input type="text" class="form-control" id="plantName" th:field="*{name}" name="plantName" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="plantPrice">Price</label>
+            <input type="number" class="form-control" id="plantPrice" th:field="*{price}" name="plantPrice" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="plantCategory">Category Name</label>
+            <input type="text" class="form-control" id="plantCategory" th:field="*{category}" name="plantCategory" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="plantImage">Image Url</label>
+            <input type="url" class="form-control" id="plantImage" th:field="*{image}" name="plantImage" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="plantImage">Description</label>
+            <textarea  class="form-control" rows="6" id="plantDescription" th:field="*{description}" name="plantDescription"></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Save Plant</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div th:replace="fregments :: create-plant"></div>
+<div th:replace="fregments :: script"></div>
+</body>
+</html>

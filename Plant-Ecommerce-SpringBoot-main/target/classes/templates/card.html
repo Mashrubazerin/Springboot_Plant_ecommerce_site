@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fregments :: head"></head>
+<body class="bg-success bg-gradient" style="--bs-bg-opacity: .25">
+
+<div th:replace="fregments :: navbar"></div>
+
+<div th:if="${error}" th:replace="fregments :: alert-error"></div>
+<div th:if="${success}" th:replace="fregments :: alert-success"></div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-7">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+              <th>SL</th>
+              <th>Images</th>
+            <th>Plant Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="card, sl : ${cards}">
+                <form th:action="@{/update-cart}" method="post">
+                    <input type="number" hidden="hidden" name="id" th:value="${card.id}">
+                    <td th:text="${sl.index + 1}"></td>
+                    <td><img width="80px" th:src="${card.plant.image}" th:alt="${card.plant.name}"></td>
+                    <td th:text="${card.plant.name}"></td>
+                      <td th:text="${card.plant.price}"></td>
+                      <td><input class="form-control" type="number" name="quantity" min="1" th:value="${card.quantity}"></td>
+                      <td th:text="${card.quantity * card.plant.price}"></td>
+                      <td>
+                    <button type="submit" value="update" class="btn btn-primary btn-sm">Update</button>
+                    <a class="btn btn-danger btn-sm" th:href="@{'/delete-cart/' + ${card.id}}">Delete</a>
+                  </td>
+                </form>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <div class="col-md-5 text-end">
+            <h4 class="mb-3">Total Price: <span th:text="${totalPrice}"></span></h4>
+
+            <a th:href="@{/checkout}" class="btn btn-dark">Check Out</a>
+        </div>
+    </div>
+  </div>
+
+<div th:replace="fregments :: create-plant"></div>
+<div th:replace="fregments :: script"></div>
+</body>
+</html>
